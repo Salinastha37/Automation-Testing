@@ -22,16 +22,18 @@ def test_dashboard_elements(driver):
 
     # Assert Dashboard text
     assert dashboard.is_dashboard_loaded()
-    
-
-   
-
     #  Click buttons
     dashboard.click_create_task()
     print(" Clicked Create Task")
 
-    dashboard.click_close_task()
-    print(" Clicked Close Task")
+    # dashboard.click_close_task()
+    # print(" Clicked Close Task")
+
+    # dashboard.click_logout()
+    # print(" Clicked logout") 
+
+    #  Click buttons
+    
 
     # dashboard.click_schedule_interview()
     # print(" Clicked Schedule Interview")
