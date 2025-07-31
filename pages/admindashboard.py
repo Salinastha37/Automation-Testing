@@ -27,7 +27,7 @@ class DashboardPage:
         EC.visibility_of_element_located(self.CLOSE_TASK_BTN)
         )
         print("Close button text is:", close_btn.text)
-        close_btn.click()
+        # close_btn.click()
 
     # def click_close_task(self):
     #     WebDriverWait(self.driver, 5).until(
