@@ -8,4 +8,3 @@ def driver():
     driver.get("https://ai-samurai.tai.com.np/")
 
     return driver
-   
