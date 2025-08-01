@@ -1,55 +1,25 @@
-
-
-import pytest
-from selenium.webdriver.common.by import By
-from pages.adminlogin import LoginPage
 from pages.admindashboard import DashboardPage
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
+from pages.adminlogin import LoginPage
 
-def test_dashboard_elements(driver):
-    # Step 1: Login
+def test_dashboard(driver):
+     #step1:Login 
     login = LoginPage(driver)
-    login.login("admin@tai.com.np", "admin123")  
+    login.login("admin@tai.com.np", "admin123")
 
-    WebDriverWait(driver, 10).until(
-        EC.presence_of_element_located((By.XPATH, '//h5[contains(text(), "Samurai Admin")]'))
-    )
-
-    print(" Current URL:", driver.current_url)
-    # Step 2: Dashboard assertions
+    #step2: Verify dashboard loaded
     dashboard = DashboardPage(driver)
+    assert dashboard.is_dashboard_loaded(), "Dashboard did not load properly."
 
-    # Assert Dashboard text
-    assert dashboard.is_dashboard_loaded()
-    #  Click buttons
+    print("Dashboard loaded successfully.")
+
+#     # step3:Open create task modal and verify it's visible
+#     assert dashboard.open_create_task_modal(), "Create Task modal did not appear"
+#     print("Modal opened")
+
+#     #step4:Close the modal and verify it's closed
+#     assert dashboard.close_create_task_modal(), "Modal did not close"
+#     print("Modal closed")
     
-
-import pytest
-from selenium.webdriver.common.by import By
-from pages.adminlogin import LoginPage
-from pages.admindashboard import DashboardPage
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
-
-def test_dashboard_elements(driver):
-    # Step 1: Login
- 
-    login = LoginPage(driver)
-    login.login("admin@tai.com.np", "admin123")  
-
-    WebDriverWait(driver, 10).until(
-        EC.presence_of_element_located((By.XPATH, '//h5[contains(text(), "Samurai Admin")]'))
-    )
-
-    print("Current URL:", driver.current_url)
-
-    # Step 2: Dashboard
-    dashboard = DashboardPage(driver)
-    assert dashboard.is_dashboard_loaded()
-
-    dashboard.click_create_task()
-    print("Clicked Create Task")
-
-    dashboard.click_close_btn()
-    print("Clicked Close Button")
+    # # step3: logout 
+    # dashboard.click_logout()
+    

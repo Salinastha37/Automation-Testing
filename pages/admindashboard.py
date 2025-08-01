@@ -1,64 +1,57 @@
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
 from utils.wait_helper import wait_and_find
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
 
 class DashboardPage:
     def __init__(self, driver):
         self.driver = driver
-
+    
     DASHBOARD_TEXT = (By.XPATH, '//h5[contains(text(), "Samurai Admin")]')
     CREATE_TASK_BTN = (By.XPATH, "//button[contains(text(), 'タスクを作成する')]")
-    CLOSE_TASK_BTN =(By.XPATH, '//button[@aria-label="close"]')
+    CREATE_TASK_MODAL_TITLE = (By.XPATH, '//h6[contains(text(), "Create a task")]')
+    CLOSE_TASK_BTN = (By.XPATH, '//button[@aria-label="close"]')
 
-    LOGOUT_BTN = (By.XPATH,"//button[contains(text(), 'ログアウト')]")
-   
-
+    # LOGOUT_BTN = (By.XPATH,"//button[contains(text(), 'ログアウト')]")
+    
+    #Check if an element is present and visible
     def is_dashboard_loaded(self):
-        return self.driver.find_element(*self.DASHBOARD_TEXT).is_displayed()
-    def click_create_task(self):
-        WebDriverWait(self.driver, 5).until(
-            EC.element_to_be_clickable(self.CREATE_TASK_BTN)
-        ).click()
-
-        modal_title = WebDriverWait(self.driver, 10).until(
-            EC.visibility_of_element_located((By.XPATH, '//h6[contains(text(), "Create a task")]'))
-        )
-        print("Modal title is:", modal_title.text)
-
         try:
-            WebDriverWait(self.driver, 5).until(
-                EC.invisibility_of_element_located((By.CLASS_NAME, "MuiBackdrop-root"))
-            )
-        except:
-            print("No backdrop or already invisible.")
-
-        close_btn = WebDriverWait(self.driver, 10).until(
-            EC.element_to_be_clickable(self.CLOSE_TASK_BTN)
+            wait_and_find(self.driver, *self.DASHBOARD_TEXT)
+            WebDriverWait(self.driver, 10).until(
+            EC.element_to_be_clickable(self.LOGOUT_BTN)
         )
-        print("Close button text is:", close_btn.text)
-        close_btn.click()
+            return True
+        except:
+            return False
+    # def open_create_task_modal(self):
+    #     #click create task button and verify modal is visible
+    #     create_task_btn = wait_and_find(self.driver, *self.CREATE_TASK_BTN)
+    #     create_task_btn.click()
+         
+    #     # Verify modal title appears
+    #     modal_title = wait_and_find(self.driver, *self.CREATE_TASK_MODAL_TITLE)
+    #     print("Modal title is:", modal_title.text)
+    #     return modal_title.is_displayed()
+    # def close_create_task_modal(self):
+    #     #Click the close button on the modal and verified it's close
+    #     close_btn = wait_and_find(self.driver, *self.CLOSE_TASK_BTN)
+    #     close_btn.click()
 
-    # def click_close_task(self):
+    #     # Optional: wait until modal disappears
     #     WebDriverWait(self.driver, 5).until(
-    #         EC.visibility_of_element_located((By.CLASS_NAME, "MuiButton-root"))  # or adjust the modal class
+    #         EC.invisibility_of_element_located(self.CREATE_TASK_MODAL_TITLE)
     #     )
-    #     WebDriverWait(self.driver, 5).until(
-    #         EC.element_to_be_clickable(self.CLOSE_TASK_BTN)
-    #     ).click()
-
+    #     print("Modal closed successfully.")
+    #     return True
+    
     # def click_logout(self):
-    #      wait_and_find(self.driver, *self.LOGOUT_BTN).click()
-
-    
-    
-   
-    
-
-    # def click_schedule_interview(self):
-    #     self.driver.find_element(*self.SCHEDULE_INTERVIEW_BTN).click()
-
-    # def click_create_appointment(self):
-    #     self.driver.find_element(*self.CREATE_APPOINTMENT_BTN).click()
-    
+    #     logout_btn = wait_and_find(self.driver, *self.LOGOUT_BTN)
+    #     logout_btn.click()
+    #     print("Logout button clicked successfully")
+            
+    #     WebDriverWait(self.driver, 5).until(
+    #     EC.visibility_of_element_located((By.ID, "email"))  )
+    #     print("Logout successful - back to login page.")
+ 
 
